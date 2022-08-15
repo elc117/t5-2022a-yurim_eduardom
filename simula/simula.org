@@ -1,0 +1,184 @@
+* Simula
+
+** Motivação
+Estudamos a linguagem Simula a fim de compreender a origem da programação orientada a objetos.
+
+** Senta que lá vem a história
+
+** A linguagem
+*** Noções preliminares
+#+BEGIN_SRC simula
+BEGIN
+  COMMENT DECLARACAO DE VARIAVEIS;
+  INTEGER A, B;
+  REAL X;
+  
+  COMMENT ATRIBUICAO DE VALOR AAS VARIAVEIS;
+  A := 2;
+  B := 3;
+  
+  X := (A + B) * B;
+
+  COMMENT COLOCA X EM UMA ESPECIE DE 'BUFFER';
+  OUTFIX(X, 6, 20);
+
+  COMMENT MOSTRA O QUE ESTA NO 'BUFFER';
+  OUTIMAGE;
+END;
+#+END_SRC
+*** Estruturas condicionais
+#+BEGIN_SRC simula
+BEGIN
+  INTEGER X, Y;
+  BOOLEAN EQUAL, GREATER;
+
+  X := 5;
+  Y := X;
+
+  IF X > Y 
+    THEN GREATER := 1
+      ELSE GREATER := 0;
+
+  OUTFIX(GREATER, 0, 0); 
+  OUTIMAGE;
+END;
+#+END_SRC
+*** Estruturas de repetição
+#+BEGIN_SRC simula
+BEGIN
+  COMMENT AS VARIAVEIS COMECAM ZERADAS;
+  INTEGER X, ACC;
+
+  COMMENT OS QUATRO LOOPS FAZEM A MESMA COISA;
+ACCUMULATION:
+  ACC := ACC + X;
+  X := X + 1;
+  OUTINT(ACC, 0);
+  OUTIMAGE;
+  IF X < 11 THEN GOTO ACCUMULATION;
+
+  ACC := 0;
+  FOR X := 0 STEP 1 UNTIL 10 DO
+  BEGIN
+    ACC := ACC + X;
+    OUTINT(ACC, 0);
+    OUTIMAGE;
+  END;
+
+  X := 0;
+  ACC := 0;
+  FOR X := X + 1 WHILE X < 11 DO
+  BEGIN
+    ACC := ACC + X;
+    OUTINT(ACC, 0);
+    OUTIMAGE;
+  END;
+
+  X := 0;
+  ACC := 0;
+  WHILE X < 11 DO
+  BEGIN
+    ACC := ACC + X;
+    X := X + 1;
+    OUTINT(ACC, 0);
+    OUTIMAGE;
+  END;
+END;
+#+END_SRC
+*** Procedimentos
+**** Um exemplo clássico: o algoritmo de Euclides para encontrar o máximo divisor comum
+#+BEGIN_SRC simula
+BEGIN
+  INTEGER RES;
+
+  INTEGER PROCEDURE GCD(A, B);
+  INTEGER A, B; COMMENT AQUI VAO OS PARAMETROS;
+  BEGIN
+    INTEGER TEMP; COMMENT VARIAVEIS AUXILIARES;
+
+    WHILE B > 0 DO
+    BEGIN
+      TEMP := B;
+      B := MOD(A, B);
+      A := TEMP;
+    END;
+
+    GCD := A; COMMENT RETORNO DO PROCEDIMENTO;
+  END;
+
+  RES := GCD(15, 4);
+  
+  OUTINT(RES, 0);
+  OUTIMAGE;
+END;
+#+END_SRC
+*** Classes
+**** Um exemplo simples: o ponto cartesiano
+#+BEGIN_SRC simula
+BEGIN
+  COMMENT REFERENCIA PARA UM OBJETO DO TIPO POINT;
+  REF(POINT) P;
+
+  COMMENT DEFINICAO DA CLASSE POINT;
+  CLASS POINT;
+  BEGIN
+    REAL X, Y;
+  END;
+
+  COMMENT CRIACAO DE UMA INSTACIA DE PONTO;
+  P :- NEW POINT;
+
+  COMMENT ACESSO AOS ATRIBUTOS DA CLASSE;
+  P.X := 1;
+  P.Y := 2;
+
+  OUTINT(P.X, 0);
+  OUTIMAGE;
+  OUTINT(P.Y, 0);
+  OUTIMAGE;
+END;
+#+END_SRC
+**** Construtores?
+Um problema do exemplo anterior é a inconveniência da inicialização da classe: primeiro instanciamo-la, e depois atribuímos valores aos seus atributos. Podemos contornar esse problema, mudando um pouco a definição da classe.
+#+BEGIN_SRC simula
+BEGIN
+  REF(POINT) P;
+
+  CLASS POINT(X, Y);
+  REAL X, Y;
+  BEGIN
+    COMMENT EM VEZ DE CRIAR UM BLOCO VAZIO, PODEMOS USAR UM PONTO E VIRGULA;
+  END;
+
+  COMMENT PERCEBA O USO DE :- EM VEZ DE :=;
+  P :- NEW POINT(1, 2);
+
+  OUTINT(P.X, 0);
+  OUTIMAGE;
+  OUTINT(P.Y, 0);
+  OUTIMAGE;
+END;
+#+END_SRC
+**** Classes recursivas? Que tal uma lista encadeada?
+#+BEGIN_SRC simula
+BEGIN
+  REF(LINKED_LIST) LIST;
+  REF(NODE) FIRST;
+
+  CLASS LINKED_LIST;
+  BEGIN
+    REF(NODE) FIRST;
+  END;
+
+  CLASS NODE(ID);
+  INT ID;
+  BEGIN
+    REF(NODE) NEXT;
+  END;
+
+  LIST :- NEW LINKED_LIST;
+
+  COMMENT CONTINUA;
+END;
+#+END_SRC
+
