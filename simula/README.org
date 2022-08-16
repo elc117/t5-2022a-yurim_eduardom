@@ -86,7 +86,7 @@ ACCUMULATION:
 END;
 #+END_SRC
 *** Procedimentos
-**** Um exemplo clássico: o algoritmo de Euclides para encontrar o máximo divisor comum
+**** Máximo divisor comum
 #+BEGIN_SRC simula
 BEGIN
   INTEGER RES;
@@ -113,7 +113,8 @@ BEGIN
 END;
 #+END_SRC
 *** Classes
-**** Um exemplo simples: o ponto cartesiano
+**** Ponto cartesiano
+Criamos uma classe para pontos cartesianos, pois acreditamos seja um ótimo exemplo inicial.
 #+BEGIN_SRC simula
 BEGIN
   COMMENT REFERENCIA PARA UM OBJETO DO TIPO POINT;
@@ -139,7 +140,7 @@ BEGIN
 END;
 #+END_SRC
 **** Construtores?
-Um problema do exemplo anterior é a inconveniência da inicialização da classe: primeiro instanciamo-la, e depois atribuímos valores aos seus atributos. Podemos contornar esse problema, mudando um pouco a definição da classe.
+Um problema do exemplo anterior é a inconveniência ao inicializar a classe: primeiro instanciamo-la, e só depois atribuímos valores aos seus atributos. Podemos contornar esse problema mudando um pouco a definição.
 #+BEGIN_SRC simula
 BEGIN
   REF(POINT) P;
@@ -159,29 +160,6 @@ BEGIN
   OUTIMAGE;
 END;
 #+END_SRC
-**** Classes recursivas? Que tal uma lista encadeada?
-#+BEGIN_SRC simula
-BEGIN
-  REF(LINKED_LIST) LIST;
-  REF(NODE) FIRST;
-
-  CLASS LINKED_LIST;
-  BEGIN
-    REF(NODE) FIRST;
-  END;
-
-  CLASS NODE(ID);
-  INT ID;
-  BEGIN
-    REF(NODE) NEXT;
-  END;
-
-  LIST :- NEW LINKED_LIST;
-
-  COMMENT CONTINUA;
-END;
-#+END_SRC
-
 **** Métodos? Que tal uma lista encadeada?
 A implementação que segue é bastante simples. A lista não é ordenada, e a classe possui dois metódos: o INSERT, que insere um ID no final da lista, e o PRINT, que imprime a lista e retorna a contagem de nós.
 #+BEGIN_SRC simula
