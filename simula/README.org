@@ -182,3 +182,73 @@ BEGIN
 END;
 #+END_SRC
 
+**** Métodos? Que tal uma lista encadeada?
+A implementação que segue é bastante simples. A lista não é ordenada, e a classe possui dois metódos: o INSERT, que insere um ID no final da lista, e o PRINT, que imprime a lista e retorna a contagem de nós.
+#+BEGIN_SRC simula
+BEGIN
+  REF(LINKED_LIST) LIST;
+  INTEGER N;
+
+  CLASS NODE(ID);
+  INTEGER ID;
+  BEGIN
+    REF(NODE) NEXT;
+  END;
+
+  CLASS LINKED_LIST;
+  BEGIN
+    REF(NODE) FIRST;
+    
+    INTEGER PROCEDURE INSERT(ID);
+    INTEGER ID;
+    BEGIN
+      REF(NODE) N;
+      
+      IF FIRST =/= NONE THEN 
+        BEGIN
+          N :- FIRST;
+          WHILE N.NEXT =/= NONE DO N :- N.NEXT;
+          N.NEXT :- NEW NODE(ID);
+        END 
+      ELSE 
+        BEGIN
+          FIRST :- NEW NODE(ID);
+        END;
+
+      INSERT := ID;
+
+    END;
+    
+    INTEGER PROCEDURE PRINT;
+    BEGIN
+      INTEGER COUNT;
+      REF(NODE) N;
+      
+      N :- FIRST;      
+
+      WHILE N =/= NONE DO
+        BEGIN
+          OUTINT(N.ID, 0);
+          OUTIMAGE;
+          N :- N.NEXT;
+          COUNT := COUNT + 1;
+        END;     
+   
+      PRINT := COUNT;
+
+    END;
+  END;
+
+  LIST :- NEW LINKED_LIST;
+
+  LIST.INSERT(10);
+  LIST.INSERT(20);
+  LIST.INSERT(30);
+  
+  N := LIST.PRINT;
+  
+  OUTINT(N, 0);
+  OUTIMAGE;
+
+END;
+#+END_SRC
