@@ -97,7 +97,7 @@ BEGIN
 
   WHILE X < 11 DO
   BEGIN
-p    ACC := ACC + X;
+    ACC := ACC + X;
     X := X + 1;
     OUTINT(ACC, 0);
     OUTIMAGE;
@@ -107,6 +107,7 @@ END;
 #+END_SRC
 *** Procedimentos
 **** Máximo divisor comum
+Em Simula, funções são chamadas de procedimentos. Segue a implementação do algoritmo de Euclides.
 #+BEGIN_SRC simula
 BEGIN
   INTEGER RES;
@@ -265,14 +266,14 @@ BEGIN
   END;
 
   COMMENT PARA DECLARAR UMA SUBCLASSE, 
-          PODEMOS O NOME DA CLASSE MAE ANTES DA DECLARACAO;
+          POMOS O NOME DA CLASSE MAE ANTES DA DECLARACAO;
   POINT2 CLASS POINT3(Z);
   REAL Z;
   BEGIN
   END;
 
-  COMMENT TEMOS QUE PASSAR TODOS OS PARAMETROS SEGUNDO A ORDEM
-          DE HERANÇA;
+  COMMENT TEMOS QUE PASSAR TODOS OS PARAMETROS 
+          SEGUNDO A ORDEM DE HERANÇA;
   P3 :- NEW POINT3(1, 2, 3);
 
   OUTREAL(P3.X, 6, 20);
