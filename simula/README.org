@@ -290,5 +290,7 @@ Percebemos que Simula foi, de fato, muito influente não só conceitualmente, ma
 Tivemos dificuldades para baixar um compilador Simula, e acabamos usando o [[https://www.tutorialspoint.com/compile_simula_online.php][Compilador do Tutorials Point]].
 ** Referências
 Introduction to SIMULA 67 de Günther Lamprecht.
+
 [[https://en.wikipedia.org/wiki/Simula][A página da Wikipédia para Simula]].
+
 [[https://web.archive.org/web/20040919031218/http://www.macs.hw.ac.uk/~rjp/bookhtml/][An Introduction to Programming in Simula]].
