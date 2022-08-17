@@ -285,7 +285,7 @@ BEGIN
 END;
 #+END_SRC
 ** Conclusões
-Percebemos que Simula foi, de fato, muito influente não só conceitualmente, mas também sintaticamente: acessamos atributos de um objeto através de um ponto final, instanciamos objetos através de ```NEW``` e definimos classes com um ```CLASS```. Um aspecto muito interessante da linguagem é a forma como declaramos variáveis de classe. Escrevemos src_simula{REF(NOME_DA_CLASSE)}, que são como ponteiros. Em Java, por exemplo, esse detalhe fica escondido.
+Percebemos que Simula foi, de fato, muito influente não só conceitualmente, mas também sintaticamente: acessamos atributos de um objeto através de um ponto final, instanciamos objetos através de NEW e definimos classes com um CLASS. Um aspecto muito interessante da linguagem é a forma como declaramos variáveis de classe. Escrevemos REF(NOME_DA_CLASSE), que são como ponteiros. Em Java, por exemplo, esse detalhe fica escondido.
 ** Como executar os códigos
 Tivemos dificuldades para baixar um compilador Simula, e acabamos usando o [[https://www.tutorialspoint.com/compile_simula_online.php][Compilador do Tutorials Point]].
 ** Referências
