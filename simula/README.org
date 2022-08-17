@@ -1,10 +1,6 @@
 * Simula
-
 ** Motivação
-Estudamos a linguagem Simula a fim de compreender a origem da programação orientada a objetos.
-
-** Senta que lá vem a história
-
+Simula é considerada a primeira linguagem orientada a objetos. Essa linguagem inaugurou conceitos como o de classe e de herança, e influenciou diretamente linguagens como C++ e Java. Decidimos estudá-la a fim de perceber de que forma a orientação a objetos evoluiu ao longo do tempo.
 ** A linguagem
 *** Noções preliminares
 #+BEGIN_SRC simula
@@ -44,6 +40,7 @@ BEGIN
 END;
 #+END_SRC
 *** Estruturas de repetição
+**** GOTO
 #+BEGIN_SRC simula
 BEGIN
   COMMENT AS VARIAVEIS COMECAM ZERADAS;
@@ -57,6 +54,13 @@ ACCUMULATION:
   OUTIMAGE;
   IF X < 11 THEN GOTO ACCUMULATION;
 
+END;
+#+END_SRC
+**** FOR-STEP-UNTIL-DO
+#+BEGIN_SRC simula
+BEGIN
+  INTEGER X, ACC;
+
   ACC := 0;
   FOR X := 0 STEP 1 UNTIL 10 DO
   BEGIN
@@ -64,6 +68,13 @@ ACCUMULATION:
     OUTINT(ACC, 0);
     OUTIMAGE;
   END;
+
+END;
+#+END_SRC
+**** FOR-WHILE-DO
+#+BEGIN_SRC simula
+BEGIN
+  INTEGER X, ACC;
 
   X := 0;
   ACC := 0;
@@ -74,15 +85,24 @@ ACCUMULATION:
     OUTIMAGE;
   END;
 
+END;
+#+END_SRC
+**** WHILE-DO
+#+BEGIN_SRC simula
+BEGIN
+  INTEGER X, ACC;
+
   X := 0;
   ACC := 0;
+
   WHILE X < 11 DO
   BEGIN
-    ACC := ACC + X;
+p    ACC := ACC + X;
     X := X + 1;
     OUTINT(ACC, 0);
     OUTIMAGE;
   END;
+
 END;
 #+END_SRC
 *** Procedimentos
@@ -112,6 +132,7 @@ BEGIN
   OUTIMAGE;
 END;
 #+END_SRC
+** Orientação a objetos
 *** Classes
 **** Ponto cartesiano
 Criamos uma classe para pontos cartesianos, pois acreditamos seja um ótimo exemplo inicial.
@@ -215,7 +236,7 @@ BEGIN
       PRINT := COUNT;
 
     END;
-  END;
+    END;
 
   LIST :- NEW LINKED_LIST;
 
@@ -230,3 +251,43 @@ BEGIN
 
 END;
 #+END_SRC
+*** Herança
+**** Ponto no espaço
+Para exemplificar o conceito de herança em Simula, decidimos definir uma classe para pontos no espaço. Esses pontos podem ser vistos como um ponto no plano mais outra coordenada.
+#+BEGIN_SRC simula
+BEGIN
+  REF(POINT2) P2;
+  REF(POINT3) P3;
+
+  CLASS POINT2(X, Y);
+  REAL X, Y;
+  BEGIN
+  END;
+
+  COMMENT PARA DECLARAR UMA SUBCLASSE, 
+          PODEMOS O NOME DA CLASSE MAE ANTES DA DECLARACAO;
+  POINT2 CLASS POINT3(Z);
+  REAL Z;
+  BEGIN
+  END;
+
+  COMMENT TEMOS QUE PASSAR TODOS OS PARAMETROS SEGUNDO A ORDEM
+          DE HERANÇA;
+  P3 :- NEW POINT3(1, 2, 3);
+
+  OUTREAL(P3.X, 6, 20);
+  OUTIMAGE;
+  OUTREAL(P3.Y, 6, 20);
+  OUTIMAGE;
+  OUTREAL(P3.Z, 6, 20);
+  OUTIMAGE;
+END;
+#+END_SRC
+** Conclusões
+Percebemos que Simula foi, de fato, muito influente não só conceitualmente, mas também sintaticamente: acessamos atributos de um objeto através de um ponto final, instanciamos objetos através de ```NEW``` e definimos classes com um ```CLASS```. Um aspecto muito interessante da linguagem é a forma como declaramos variáveis de classe. Escrevemos ```REF(NOME_DA_CLASSE)```, que são como ponteiros. Em Java, por exemplo, esse detalhe fica escondido.
+** Como executar os códigos
+Tivemos dificuldades para baixar um compilador Simula, e acabamos usando o [[https://www.tutorialspoint.com/compile_simula_online.php][Compilador do Tutorials Point]].
+** Referências
+Introduction to SIMULA 67 de Günther Lamprecht.
+[[https://en.wikipedia.org/wiki/Simula][A página da Wikipédia para Simula]].
+[[https://web.archive.org/web/20040919031218/http://www.macs.hw.ac.uk/~rjp/bookhtml/][An Introduction to Programming in Simula]].
