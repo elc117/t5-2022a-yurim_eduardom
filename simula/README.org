@@ -1,6 +1,10 @@
 * Simula
 ** Motivação
-Simula é considerada a primeira linguagem orientada a objetos. Essa linguagem inaugurou conceitos como o de classe e de herança, e influenciou diretamente linguagens como C++ e Java. Decidimos estudá-la a fim de perceber de que forma a orientação a objetos evoluiu ao longo do tempo.
+#+BEGIN_QUOTE
+Every language that uses the word 'class' for 'type' is a descendant of Simula, directly or indirectly.
+--- Bjarne Stroustrup
+#+END_QUOTE
+Simula é considerada a primeira linguagem orientada a objetos. Essa linguagem inaugurou os conceitos de classe e de herança. Decidimos estudá-la a fim de perceber de que forma a orientação a objetos evoluiu ao longo do tempo.
 ** A linguagem
 *** Noções preliminares
 #+BEGIN_SRC simula
@@ -294,3 +298,5 @@ Introduction to SIMULA 67 de Günther Lamprecht.
 [[https://en.wikipedia.org/wiki/Simula][A página da Wikipédia para Simula]].
 
 [[https://web.archive.org/web/20040919031218/http://www.macs.hw.ac.uk/~rjp/bookhtml/][An Introduction to Programming in Simula]].
+
+[[https://www.youtube.com/watch?v=K3W56e9j4UY&t][Entrevista de Bjarne Stroustrup sobre a origem de C++]].
