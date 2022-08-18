@@ -1,1 +1,302 @@
-# t5-2022a-yurim_eduardom
+ Simula
+ Motivação
+#+BEGIN_QUOTE
+Every language that uses the word 'class' for 'type' is a descendant of Simula, directly or indirectly.
+--- Bjarne Stroustrup
+#+END_QUOTE
+Simula é considerada a primeira linguagem orientada a objetos. Essa linguagem inaugurou os conceitos de classe e de herança. Decidimos estudá-la a fim de perceber de que forma a orientação a objetos evoluiu ao longo do tempo.
+ A linguagem
+ Noções preliminares
+#+BEGIN_SRC simula
+BEGIN
+  COMMENT DECLARACAO DE VARIAVEIS;
+  INTEGER A, B;
+  REAL X;
+  
+  COMMENT ATRIBUICAO DE VALOR AAS VARIAVEIS;
+  A = 2;
+  B = 3;
+  
+  X = (A + B)  B;
+
+  COMMENT COLOCA X EM UMA ESPECIE DE 'BUFFER';
+  OUTFIX(X, 6, 20);
+
+  COMMENT MOSTRA O QUE ESTA NO 'BUFFER';
+  OUTIMAGE;
+END;
+#+END_SRC
+ Estruturas condicionais
+#+BEGIN_SRC simula
+BEGIN
+  INTEGER X, Y;
+  BOOLEAN EQUAL, GREATER;
+
+  X = 5;
+  Y = X;
+
+  IF X  Y 
+    THEN GREATER = 1
+      ELSE GREATER = 0;
+
+  OUTFIX(GREATER, 0, 0); 
+  OUTIMAGE;
+END;
+#+END_SRC
+ Estruturas de repetição
+ GOTO
+#+BEGIN_SRC simula
+BEGIN
+  COMMENT AS VARIAVEIS COMECAM ZERADAS;
+  INTEGER X, ACC;
+
+  COMMENT OS QUATRO LOOPS FAZEM A MESMA COISA;
+ACCUMULATION
+  ACC = ACC + X;
+  X = X + 1;
+  OUTINT(ACC, 0);
+  OUTIMAGE;
+  IF X  11 THEN GOTO ACCUMULATION;
+
+END;
+#+END_SRC
+ FOR-STEP-UNTIL-DO
+#+BEGIN_SRC simula
+BEGIN
+  INTEGER X, ACC;
+
+  ACC = 0;
+  FOR X = 0 STEP 1 UNTIL 10 DO
+  BEGIN
+    ACC = ACC + X;
+    OUTINT(ACC, 0);
+    OUTIMAGE;
+  END;
+
+END;
+#+END_SRC
+ FOR-WHILE-DO
+#+BEGIN_SRC simula
+BEGIN
+  INTEGER X, ACC;
+
+  X = 0;
+  ACC = 0;
+  FOR X = X + 1 WHILE X  11 DO
+  BEGIN
+    ACC = ACC + X;
+    OUTINT(ACC, 0);
+    OUTIMAGE;
+  END;
+
+END;
+#+END_SRC
+ WHILE-DO
+#+BEGIN_SRC simula
+BEGIN
+  INTEGER X, ACC;
+
+  X = 0;
+  ACC = 0;
+
+  WHILE X  11 DO
+  BEGIN
+    ACC = ACC + X;
+    X = X + 1;
+    OUTINT(ACC, 0);
+    OUTIMAGE;
+  END;
+
+END;
+#+END_SRC
+ Procedimentos
+ Máximo divisor comum
+Em Simula, funções são chamadas de procedimentos. Segue a implementação do algoritmo de Euclides.
+#+BEGIN_SRC simula
+BEGIN
+  INTEGER RES;
+
+  INTEGER PROCEDURE GCD(A, B);
+  INTEGER A, B; COMMENT AQUI VAO OS PARAMETROS;
+  BEGIN
+    INTEGER TEMP; COMMENT VARIAVEIS AUXILIARES;
+
+    WHILE B  0 DO
+    BEGIN
+      TEMP = B;
+      B = MOD(A, B);
+      A = TEMP;
+    END;
+
+    GCD = A; COMMENT RETORNO DO PROCEDIMENTO;
+  END;
+
+  RES = GCD(15, 4);
+  
+  OUTINT(RES, 0);
+  OUTIMAGE;
+END;
+#+END_SRC
+ Orientação a objetos
+ Classes
+ Ponto cartesiano
+Criamos uma classe para pontos cartesianos, pois acreditamos seja um ótimo exemplo inicial.
+#+BEGIN_SRC simula
+BEGIN
+  COMMENT REFERENCIA PARA UM OBJETO DO TIPO POINT;
+  REF(POINT) P;
+
+  COMMENT DEFINICAO DA CLASSE POINT;
+  CLASS POINT;
+  BEGIN
+    REAL X, Y;
+  END;
+
+  COMMENT CRIACAO DE UMA INSTACIA DE PONTO;
+  P - NEW POINT;
+
+  COMMENT ACESSO AOS ATRIBUTOS DA CLASSE;
+  P.X = 1;
+  P.Y = 2;
+
+  OUTINT(P.X, 0);
+  OUTIMAGE;
+  OUTINT(P.Y, 0);
+  OUTIMAGE;
+END;
+#+END_SRC
+ Construtores
+Um problema do exemplo anterior é a inconveniência ao inicializar a classe primeiro instanciamo-la, e só depois atribuímos valores aos seus atributos. Podemos contornar esse problema mudando um pouco a definição.
+#+BEGIN_SRC simula
+BEGIN
+  REF(POINT) P;
+
+  CLASS POINT(X, Y);
+  REAL X, Y;
+  BEGIN
+    COMMENT EM VEZ DE CRIAR UM BLOCO VAZIO, PODEMOS USAR UM PONTO E VIRGULA;
+  END;
+
+  COMMENT PERCEBA O USO DE - EM VEZ DE =;
+  P - NEW POINT(1, 2);
+
+  OUTINT(P.X, 0);
+  OUTIMAGE;
+  OUTINT(P.Y, 0);
+  OUTIMAGE;
+END;
+#+END_SRC
+ Métodos Que tal uma lista encadeada
+A implementação que segue é bastante simples. A lista não é ordenada, e a classe possui dois metódos o INSERT, que insere um ID no final da lista, e o PRINT, que imprime a lista e retorna a contagem de nós.
+#+BEGIN_SRC simula
+BEGIN
+  REF(LINKED_LIST) LIST;
+  INTEGER N;
+
+  CLASS NODE(ID);
+  INTEGER ID;
+  BEGIN
+    REF(NODE) NEXT;
+  END;
+
+  CLASS LINKED_LIST;
+  BEGIN
+    REF(NODE) FIRST;
+    
+    INTEGER PROCEDURE INSERT(ID);
+    INTEGER ID;
+    BEGIN
+      REF(NODE) N;
+      
+      IF FIRST == NONE THEN 
+        BEGIN
+          N - FIRST;
+          WHILE N.NEXT == NONE DO N - N.NEXT;
+          N.NEXT - NEW NODE(ID);
+        END 
+      ELSE 
+        BEGIN
+          FIRST - NEW NODE(ID);
+        END;
+
+      INSERT = ID;
+
+    END;
+    
+    INTEGER PROCEDURE PRINT;
+    BEGIN
+      INTEGER COUNT;
+      REF(NODE) N;
+      
+      N - FIRST;      
+
+      WHILE N == NONE DO
+        BEGIN
+          OUTINT(N.ID, 0);
+          OUTIMAGE;
+          N - N.NEXT;
+          COUNT = COUNT + 1;
+        END;     
+   
+      PRINT = COUNT;
+
+    END;
+    END;
+
+  LIST - NEW LINKED_LIST;
+
+  LIST.INSERT(10);
+  LIST.INSERT(20);
+  LIST.INSERT(30);
+  
+  N = LIST.PRINT;
+  
+  OUTINT(N, 0);
+  OUTIMAGE;
+
+END;
+#+END_SRC
+ Herança
+ Ponto no espaço
+Para exemplificar o conceito de herança em Simula, decidimos definir uma classe para pontos no espaço. Esses pontos podem ser vistos como um ponto no plano mais outra coordenada.
+#+BEGIN_SRC simula
+BEGIN
+  REF(POINT2) P2;
+  REF(POINT3) P3;
+
+  CLASS POINT2(X, Y);
+  REAL X, Y;
+  BEGIN
+  END;
+
+  COMMENT PARA DECLARAR UMA SUBCLASSE, 
+          POMOS O NOME DA CLASSE MAE ANTES DA DECLARACAO;
+  POINT2 CLASS POINT3(Z);
+  REAL Z;
+  BEGIN
+  END;
+
+  COMMENT TEMOS QUE PASSAR TODOS OS PARAMETROS 
+          SEGUNDO A ORDEM DE HERANÇA;
+  P3 - NEW POINT3(1, 2, 3);
+
+  OUTREAL(P3.X, 6, 20);
+  OUTIMAGE;
+  OUTREAL(P3.Y, 6, 20);
+  OUTIMAGE;
+  OUTREAL(P3.Z, 6, 20);
+  OUTIMAGE;
+END;
+#+END_SRC
+ Conclusões
+Percebemos que Simula foi, de fato, muito influente não só conceitualmente, mas também sintaticamente acessamos atributos de um objeto através de um ponto final, instanciamos objetos através de NEW e definimos classes com um CLASS. Um aspecto muito interessante da linguagem é a forma como declaramos variáveis de classe. Escrevemos REF(NOME_DA_CLASSE), que são como ponteiros. Em Java, por exemplo, esse detalhe fica escondido.
+ Como executar os códigos
+Tivemos dificuldades para baixar um compilador Simula, e acabamos usando o [[httpswww.tutorialspoint.comcompile_simula_online.php][Compilador do Tutorials Point]].
+ Referências
+Introduction to SIMULA 67 de Günther Lamprecht.
+
+[[httpsen.wikipedia.orgwikiSimula][A página da Wikipédia para Simula]].
+
+[[httpsweb.archive.orgweb20040919031218httpwww.macs.hw.ac.uk~rjpbookhtml][An Introduction to Programming in Simula]].
+
+[[httpswww.youtube.comwatchv=K3W56e9j4UY&t][Entrevista de Bjarne Stroustrup sobre a origem de C++]].
