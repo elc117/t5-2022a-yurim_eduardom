@@ -357,10 +357,15 @@ x := 8. y := 1.
 
 *** Orientação a objetos:
 #+BEGIN_SRC smalltalk
+
+"Criando uma classe"
 Object subclass: ContaBancaria [
+
+    "declarando o atributo saldo"
     | saldo |
     <comment: 'Respresentacao de uma Conta bancaria'>
     
+    "Construtor"
     ContaBancaria class >> new [
         <category: 'construtor'>
         | r |
@@ -369,19 +374,25 @@ Object subclass: ContaBancaria [
         ^r
     ]
     
+    "Inicializa o atributo saldo (é chamado no construtor)"
     inicializa [
         <category: 'Inicializa o atributo saldo'>
         saldo := 0
     ]
     
+    "saque é um método da classe que recebe como atributo a quantidade a ser sacada"
     saque: quantidade [
         <category: 'Sacando dinheiro'>
         saldo := saldo - quantidade
     ]
+    
+    "deposito é um método da classe que recebe como atributo a quantidade a ser depositada"
     deposito: quantidade [
         <category: 'Depositando dinheiro'>
         saldo := saldo + quantidade
     ]
+    
+    "Mostra na telas as informacoes da conta"
     informacoes [
         <category: 'Informa a situacao da conta'>
         Transcript show: 'Saldo da conta: '.
@@ -389,10 +400,19 @@ Object subclass: ContaBancaria [
     ]
 ]
 
+"A classe é instanciada"
 conta := ContaBancaria new.
+
+"O método desposito recebe uma mensagem, com parametro 50"
 conta deposito: 50.
+
+"O método desposito recebe outra mensagem, com parametro 20"
 conta deposito: 20.
+
+"O método saque recebe outra mensagem, com parametro 10"
 conta saque: 10.
+
+"printa as infos da conta"
 conta informacoes 
 #+END_SRC
 
