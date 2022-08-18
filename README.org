@@ -1,11 +1,11 @@
-* Simula
+* Simula e Smalltalk
 ** Motivação
 #+BEGIN_QUOTE
 Every language that uses the word 'class' for 'type' is a descendant of Simula, directly or indirectly.
 --- Bjarne Stroustrup
 #+END_QUOTE
-Simula é considerada a primeira linguagem orientada a objetos. Essa linguagem inaugurou os conceitos de classe e de herança. Decidimos estudá-la a fim de perceber de que forma a orientação a objetos evoluiu ao longo do tempo.
-** A linguagem
+Simula e Smalltalk são consideradas algumas das primeiras linguagens orientadas a objetos. Simula inaugurou os conceitos de classe e de herança, já em Smalltalk, tudo que existe na linguagem são objetos, inclusive if, while e for não são comandos, são métodos. Decidimos estudá-las a fim de perceber de que forma a orientação a objetos evoluiu ao longo do tempo.
+** Simula - A linguagem
 *** Noções preliminares
 #+BEGIN_SRC simula
 BEGIN
@@ -290,8 +290,117 @@ END;
 #+END_SRC
 ** Conclusões
 Percebemos que Simula foi, de fato, muito influente não só conceitualmente, mas também sintaticamente: acessamos atributos de um objeto através de um ponto final, instanciamos objetos através de NEW e definimos classes com um CLASS. Um aspecto muito interessante da linguagem é a forma como declaramos variáveis de classe. Escrevemos REF(NOME_DA_CLASSE), que são como ponteiros. Em Java, por exemplo, esse detalhe fica escondido.
+
+** SmallTalk - A linguagem
+*** Noções preliminares
+**** Em SmallTalk, as funções não são chamadas, o que ocorre são mensagens que são enviadas aos objetos.
+O sinal “ ^ ” é usado para indicar o retorno;
+
+#+BEGIN_SRC smalltalk
+"Printando uma mensagem na tela:"
+Transcript show: 'Hello, world!'. 
+
+"Declarando variavel"
+| x |
+
+"Atribuindo valor a uma variavel"
+| x |
+x _ 9.
+
+"Somando valores"
+| x |
+x := 6 + 3.       
+
+"converter uma variavel"
+| x |
+x := 3.99 asInteger.    
+
+"Verificando se uma variável é positiva"
+| b x |
+x _ 9.
+b := x positive.
+
+"AND"
+| b |
+b := (x < 5) & (y > 1). 
+
+"OR"
+| b |
+b := (x < 5) | (y > 1).   
+
+"between"
+b := 5 between: 3 and: 12.             
+#+END_SRC
+
+*** Estruturas condicionais
+#+BEGIN_SRC smalltalk
+"IF"
+| x |
+x := 2 sqrt.
+x > 10 ifTrue: [Transcript show: 'Falso!'; cr].     
+x > 10 ifFalse: [Transcript show: 'Verdadeiro'; cr].
+#+END_SRC
+
+*** Estruturas de repetição
+#+BEGIN_SRC smalltalk
+"Laco For:"
+
+| x y |
+x := 8. y := 1.
+1 to: x do: [:a | y := y * 2].          
+
+"While true"
+| x y |
+x := 8. y := 1.
+[x > 0] whileTrue: [x := x - 1. y := y * 2]. 
+#+END_SRC
+
+*** Orientação a objetos:
+#+BEGIN_SRC smalltalk
+Object subclass: ContaBancaria [
+    | saldo |
+    <comment: 'Respresentacao de uma Conta bancaria'>
+    
+    ContaBancaria class >> new [
+        <category: 'construtor'>
+        | r |
+        r := super new.
+        r inicializa.
+        ^r
+    ]
+    
+    inicializa [
+        <category: 'Inicializa o atributo saldo'>
+        saldo := 0
+    ]
+    
+    saque: quantidade [
+        <category: 'Sacando dinheiro'>
+        saldo := saldo - quantidade
+    ]
+    deposito: quantidade [
+        <category: 'Depositando dinheiro'>
+        saldo := saldo + quantidade
+    ]
+    informacoes [
+        <category: 'Informa a situacao da conta'>
+        Transcript show: 'Saldo da conta: '.
+        Transcript show: (saldo asString)
+    ]
+]
+
+conta := ContaBancaria new.
+conta deposito: 50.
+conta deposito: 20.
+conta saque: 10.
+conta informacoes 
+#+END_SRC
+
 ** Como executar os códigos
 Tivemos dificuldades para baixar um compilador Simula, e acabamos usando o [[https://www.tutorialspoint.com/compile_simula_online.php][Compilador do Tutorials Point]].
+
+Compilador online SmallTalk: [[https://www.tutorialspoint.com/execute_smalltalk_online.php#:~:text=2.5)-,Online%20Smalltalk%20Compiler%20(GNU%20Smalltalk%20v3.,2.5.][Compilador do Tutorials Point]].
+
 ** Referências
 Introduction to SIMULA 67 de Günther Lamprecht.
 
@@ -300,3 +409,7 @@ Introduction to SIMULA 67 de Günther Lamprecht.
 [[https://web.archive.org/web/20040919031218/http://www.macs.hw.ac.uk/~rjp/bookhtml/][An Introduction to Programming in Simula]].
 
 [[https://www.youtube.com/watch?v=K3W56e9j4UY&t][Entrevista de Bjarne Stroustrup sobre a origem de C++]].
+
+[[https://pt.wikipedia.org/wiki/Smalltalk][Wikipedia Smalltalk]].
+
+[[https://learnxinyminutes.com/docs/smalltalk/][Learn Smalltalk in Y minutes]].
